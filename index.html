@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="description" content="A private, browser-based AI workspace powered by WebGPU.">
+  <link rel="icon" href="data:,">
+  <title>Local AI Studio</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./script.js"></script>
+</head>
+<body>
+  <aside id="sidebar" aria-label="Chat navigation">
+    <a class="brand" href="./" aria-label="Local AI Studio home">
+      <span class="brand-mark" aria-hidden="true">L</span>
+      <span>Local AI Studio<small>Private by design</small></span>
+    </a>
+
+    <button class="new-chat-btn" id="newChatBtn" type="button">
+      <span aria-hidden="true">＋</span> New chat
+    </button>
+
+    <div class="history-heading">
+      <span>Workspace</span>
+      <span id="chat-count" class="count-badge">0</span>
+    </div>
+    <nav id="history-list" aria-label="Saved conversations"></nav>
+
+    <div class="sidebar-note">
+      <span class="privacy-dot" aria-hidden="true"></span>
+      <span>Prompts run in this browser. Chats stay in this browser.</span>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header class="top-bar">
+      <div class="top-line">
+        <div class="page-title">
+          <span class="eyebrow">ON-DEVICE INFERENCE</span>
+          <h1>AI workspace</h1>
+        </div>
+        <div class="runtime-chip" id="runtime-chip">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="runtime-label">Checking browser</span>
+        </div>
+      </div>
+
+      <section class="model-panel" aria-label="Model settings">
+        <div class="model-controls">
+          <label for="modelSelect">Choose a model</label>
+          <select id="modelSelect" aria-describedby="model-description">
+            <option value="SmolLM2-360M-Instruct-q4f16_1-MLC">SmolLM2 360M · Fast responses</option>
+            <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen 2.5 0.5B · Code &amp; logic</option>
+            <option value="Llama-3.2-1B-Instruct-q4f16_1-MLC">Llama 3.2 1B · Detailed reasoning</option>
+          </select>
+          <button id="loadBtn" class="load-btn" type="button">Load model</button>
+        </div>
+        <div class="model-details">
+          <div class="model-detail-copy">
+            <span class="model-tag" id="model-tag">FAST · 360M</span>
+            <p id="model-description"></p>
+          </div>
+          <div class="memory-estimate">
+            <strong id="model-memory">~196 MB</strong>
+            <span>weight files<br>runtime use varies</span>
+          </div>
+        </div>
+        <div id="gpu-alert" role="status" aria-live="polite" hidden></div>
+        <div class="load-status">
+          <p id="status-box" role="status" aria-live="polite">Ready. Choose a model to begin.</p>
+          <progress id="progress" value="0" max="100" aria-label="Model download progress" hidden></progress>
+        </div>
+      </section>
+    </header>
+
+    <section class="conversation" aria-label="Conversation">
+      <div id="chat-container" aria-live="polite"></div>
+    </section>
+
+    <form class="input-container" id="message-form">
+      <label class="sr-only" for="userInput">Message the model</label>
+      <textarea id="userInput" placeholder="Load a model to start a conversation…" disabled rows="1"></textarea>
+      <div class="composer-actions">
+        <span class="input-hint">Enter to send · Shift + Enter for a new line</span>
+        <button id="sendBtn" class="send-btn" type="submit" disabled>
+          <span>Send</span><span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </form>
+    <footer class="app-footer">
+      <span>Models run locally in your browser using WebGPU.</span>
+      <span id="storage-status">Conversations are saved on this device.</span>
+    </footer>
+  </main>
+</body>
+</html>
